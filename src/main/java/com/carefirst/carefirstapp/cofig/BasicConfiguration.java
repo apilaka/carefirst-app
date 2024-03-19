@@ -11,6 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 @Configuration
 @EnableWebSecurity
@@ -33,10 +34,17 @@ public class BasicConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(request -> request.anyRequest()
-                .authenticated())
-            .httpBasic(Customizer.withDefaults())
-            .build();
+    	http
+		// ...
+		.authorizeHttpRequests(authorize -> authorize                                  
+			.requestMatchers("/resources/**", "/signup", "/about").permitAll()         
+			.requestMatchers("/admin/**").hasRole("ADMIN")                             
+			.requestMatchers("/db/**").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') and hasRole('DBA')"))   
+			// .requestMatchers("/db/**").access(AuthorizationManagers.allOf(AuthorityAuthorizationManager.hasRole("ADMIN"), AuthorityAuthorizationManager.hasRole("DBA")))   
+			.anyRequest().denyAll()                                                
+		);
+
+	return http.build();
     }
     
     

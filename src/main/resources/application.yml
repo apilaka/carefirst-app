@@ -13,7 +13,7 @@ batch:
    job: 
     enabled: false 
 server:
-   port: 8761
+   port: 8763
    batch:
       repository:
         isolationlevelforcreate: ISOLATION_READ_COMMITTED
