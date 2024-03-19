@@ -54,8 +54,8 @@ public class EmployeeController {
 	}
 
 	// Create a new Employee - (“/employees”) 
-	@PostMapping
-	@ApiOperation(value = "Create a new Employee", response = ResponseEntity.class)
+	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
+	//@ApiOperation(value = "Create a new Employee", response = ResponseEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully created a new employee"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),

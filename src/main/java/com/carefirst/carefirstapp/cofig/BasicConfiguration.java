@@ -31,21 +31,29 @@ public class BasicConfiguration {
 
         return new InMemoryUserDetailsManager(user, admin);
     }
-
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    	http
-		// ...
-		.authorizeHttpRequests(authorize -> authorize                                  
-			.requestMatchers("/resources/**", "/signup", "/about").permitAll()         
-			.requestMatchers("/admin/**").hasRole("ADMIN")                             
-			.requestMatchers("/db/**").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') and hasRole('DBA')"))   
-			// .requestMatchers("/db/**").access(AuthorizationManagers.allOf(AuthorityAuthorizationManager.hasRole("ADMIN"), AuthorityAuthorizationManager.hasRole("DBA")))   
-			.anyRequest().denyAll()                                                
-		);
-
-	return http.build();
+        return http.authorizeHttpRequests(request -> request.anyRequest()
+                .authenticated())
+            .httpBasic(Customizer.withDefaults())
+            .build();
     }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//    	http
+//		// ...
+//		.authorizeHttpRequests(authorize -> authorize                                  
+//			.requestMatchers("/v3/listEmployees/**", "/signup", "/about").permitAll()         
+//			.requestMatchers("/v3/delete/**" ,"/v3/create/**","/v3/update/**","/find/**" ).hasRole("ADMIN")                             
+//		   
+//			// .requestMatchers("/db/**").access(AuthorizationManagers.allOf(AuthorityAuthorizationManager.hasRole("ADMIN"), AuthorityAuthorizationManager.hasRole("DBA")))   
+//			                                              
+//		);
+//
+//	return http.build();
+//    }
     
     
 //    @Bean
