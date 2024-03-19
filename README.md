@@ -1,0 +1,3 @@
+Application Link: localhost:8761/api/v3....
+
+Link to Swagger OUtput: http://localhost:8761/swagger-ui/index.html#/
