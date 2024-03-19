@@ -1,0 +1,19 @@
+spring:
+    datasource:
+        password: saibaba
+        url: jdbc:oracle:thin:@//localhost:1521/orcl
+        username: INVENTORY1
+    jpa:
+     hibernate:
+      ddl-auto: update
+     show-sql: true     
+batch:
+   jdbc:
+    initilize-schema: always
+   job: 
+    enabled: false 
+server:
+   port: 8761
+   batch:
+      repository:
+        isolationlevelforcreate: ISOLATION_READ_COMMITTED
