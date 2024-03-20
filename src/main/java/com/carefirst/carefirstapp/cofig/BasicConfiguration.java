@@ -23,37 +23,7 @@ import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 public class BasicConfiguration{
 //http://localhost:8764/login
 	//http://localhost:8764/logout
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-//        UserDetails user = User.withUsername("user")
-//            .password(passwordEncoder.encode("user"))
-//            .roles("USER")
-//            .build();
-//
-//        UserDetails admin = User.withUsername("admin")
-//            .password(passwordEncoder.encode("admin"))
-//            .roles("USER", "ADMIN")
-//            .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-    
- //   @Bean
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//    	
-//    	auth.inMemoryAuthentication()
-//    	.withUser("user")
-//    	.password(passwordEncoder().encode("userpassword"))
-//    	.roles("USER");
-//    	
-//    	auth.inMemoryAuthentication()
-//    	.withUser("admin")
-//    	.password(passwordEncoder().encode("adminpassword"))
-//    	.roles("USER");
-//    	
-//    	
-//    }
-//    
+
     
     @Bean
     public UserDetailsService userDetailsService (){
@@ -69,8 +39,7 @@ public class BasicConfiguration{
 		return new InMemoryUserDetailsManager(user,admin);
     	
     }
-    
-//    
+       
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
@@ -82,43 +51,7 @@ public class BasicConfiguration{
     		.and().formLogin()
     		.and()
     		.build();
-    		
-    		
-    		
-    	
-    	
-    	
-    	
-//        return http.authorizeHttpRequests(request -> request.anyRequest()
-//                .authenticated())
-//            .httpBasic(Customizer.withDefaults())
-//            .build();
     }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//    	http
-//        .authorizeHttpRequests((authorize) -> authorize
-//        		  .requestMatchers("http://localhost:8764/login", "/http://localhost:8764/logout").permitAll()
-// 
-//          
-//            
-//        );
-//	return http.build();
-//   }
-    
-  
-//    @Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http
-//			.securityMatcher("/api/v3/listEmployees")                            
-//			.authorizeHttpRequests(authorize -> authorize
-//			//	.requestMatchers("/listEmployees").hasRole("USER")       
-//				.requestMatchers("/api/v3/**").hasRole("ADMIN")     
-//				.anyRequest().authenticated()                      
-//			);
-//		return http.build();
-//	}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
