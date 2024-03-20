@@ -40,7 +40,7 @@ public class EmployeeController {
 	
 	
     @GetMapping
-    @RequestMapping(value = "/listEmployees", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/listEmployees", method = RequestMethod.GET)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Retrievede all employees"),
             @ApiResponse(code = 401, message = "You are not authorized"),
@@ -54,7 +54,7 @@ public class EmployeeController {
 	}
 
 	// Create a new Employee - (“/employees”) 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/admin/create", method = RequestMethod.POST, consumes = "application/json")
 	//@ApiOperation(value = "Create a new Employee", response = ResponseEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully created a new employee"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -70,7 +70,7 @@ public class EmployeeController {
 	// Delete an Employee - (“/employees/{id}”) 
 	
 	
-	@RequestMapping(value = "/delete/{employeeId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/admin/delete/{employeeId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Retrieve specific donor with the supplied donor id", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the Employee with the Employee id"),
@@ -87,7 +87,7 @@ public class EmployeeController {
 	}
 
 	// Update Employee details - (“/employees/{id}”) 
-	@RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/admin/update", method = RequestMethod.PUT, consumes = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Employee updated "),
             @ApiResponse(code = 401, message = "You are not authorized access the resource"),
@@ -102,7 +102,7 @@ public class EmployeeController {
 
 	}
 	
-	@RequestMapping(value = "/find/{employeeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/find/{employeeId}", method = RequestMethod.GET)
 	    @ApiOperation(value = "Retrieve specific donor with the supplied donor id", response = ResponseEntity.class)
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "Successfully retrieved the Employee with the Employee id"),
