@@ -2,12 +2,17 @@ package com.carefirst.carefirstapp.cofig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 
 @Configuration
@@ -35,26 +40,37 @@ public class BasicConfiguration{
 		return new InMemoryUserDetailsManager(user,admin);
     	
     }
-//       
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//    	
-//    	  return http
-//                  .csrf(CsrfConfigurer::disable)
-//                  .authorizeHttpRequests(requests -> requests
-//                          .requestMatchers("/login").permitAll()
-//                          .requestMatchers("/api/v3/user/**").hasRole("USER")
-//                          .requestMatchers("/api/v3/admin/**","/api/v3/user/**").hasRole("ADMIN")
-//                  )
-//                  .formLogin(Customizer.withDefaults())
-//                  .build();
-//
-//    			
-//
-//    }
 
+    @Bean
+    @Primary
+    HttpSecurity web(HttpSecurity http) throws Exception {
+    	 
+    	return http.csrf().disable()
+        .authorizeHttpRequests((authorize) -> authorize
+        		 // .anyRequest().permitAll()
+        		 .requestMatchers("/login","/logout").permitAll()
+        		
+        		 .requestMatchers("/api/v3/admin/**").hasRole("ADMIN")
+        		 .requestMatchers("/api/v3/user/**").hasRole("USER")
+//            .requestMatchers(HttpMethod.GET).hasAuthority("USER")
+//            .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+//            .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
+//            .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
+           
+          
+        );
+   
 
-//
+  
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 	@Bean
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();

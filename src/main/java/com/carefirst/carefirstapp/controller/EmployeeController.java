@@ -7,7 +7,9 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +40,7 @@ public class EmployeeController {
 
 	// Retrieve all Employees - (“/employees”) 
 	
-	
+	@CrossOrigin(origins = "http://localhost:8761")
     @GetMapping
     @RequestMapping(value = "/user/listEmployees", method = RequestMethod.GET)
     @ApiResponses(value = {
@@ -54,6 +56,7 @@ public class EmployeeController {
 	}
 
 	// Create a new Employee - (“/employees”) 
+	@CrossOrigin(origins = "http://localhost:8761")
 	@RequestMapping(value = "/admin/create", method = RequestMethod.POST, consumes = "application/json")
 	//@ApiOperation(value = "Create a new Employee", response = ResponseEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully created a new employee"),
@@ -69,7 +72,7 @@ public class EmployeeController {
 
 	// Delete an Employee - (“/employees/{id}”) 
 	
-	
+	@CrossOrigin(origins = "http://localhost:8761")
 	@RequestMapping(value = "/admin/delete/{employeeId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Retrieve specific donor with the supplied donor id", response = ResponseEntity.class)
     @ApiResponses(value = {
@@ -87,6 +90,7 @@ public class EmployeeController {
 	}
 
 	// Update Employee details - (“/employees/{id}”) 
+	@CrossOrigin(origins = "http://localhost:8761")
 	@RequestMapping(value = "/admin/update", method = RequestMethod.PUT, consumes = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Employee updated "),
@@ -101,7 +105,7 @@ public class EmployeeController {
 		return new ResponseEntity<String>("Updated ", HttpStatus.OK);
 
 	}
-	
+	@CrossOrigin(origins = "http://localhost:8761")
 	@RequestMapping(value = "/user/find/{employeeId}", method = RequestMethod.GET)
 	    @ApiOperation(value = "Retrieve specific donor with the supplied donor id", response = ResponseEntity.class)
 	    @ApiResponses(value = {
@@ -117,5 +121,18 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value = "/user/findItr/{employeeId}", method = RequestMethod.GET)
+	public Employee findEmployeeIterator(@PathVariable("employeeId") long employeeId)	{
+		Employee employee = employeeService.findEmployeeIterator(employeeId);
+	return	employee;
+	}
+	
+	@GetMapping(value = "/user/employees", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<List<Employee>> listEmployeesByLamda(){
+		return employeeService.getAllEmployees();
+		
+	}
+	
 
 }
